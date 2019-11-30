@@ -141,50 +141,51 @@ if __name__ == '__main__':
     # sizes = [10,100,1000,10000,100000,1000000]  # sizes on which testing is done
     total = 0
     print('\n')
-    s = int(input('Enter the input size of array\t'))
-    arr = list(np.random.randint(100000,size=(s)))
+    while(True):
+        s = int(input('Enter the input size of array\t'))
+        arr = list(np.random.randint(100000,size=(s)))
 
-    try:
+        try:
+            start_time = time.time()
+            insertion_sort(arr)
+            end_time = time.time()
+            total = (time.time() - start_time)
+            outputRunTime(total, "insertion sort")
+        except:
+            print('Running time of insertion sort exceeds 30 seconds so aborted')
+            
+        arr = list(np.random.randint(100000,size=(s)))
         start_time = time.time()
-        insertion_sort(arr)
-        end_time = time.time()
+        merge_sort(arr,0,s-1)
         total = (time.time() - start_time)
-        outputRunTime(total, "insertion sort")
-    except:
-        print('Running time of insertion sort exceeds 30 seconds so aborted')
-        
-    arr = list(np.random.randint(100000,size=(s)))
-    start_time = time.time()
-    merge_sort(arr,0,s-1)
-    total = (time.time() - start_time)
-    outputRunTime(total, "merge sort")
+        outputRunTime(total, "merge sort")
 
-    arr = list(np.random.randint(100000,size=(s)))
-    start_time = time.time()
-    heap_sort(arr)
-    total = (time.time() - start_time)
-    outputRunTime(total, "heap sort")
-
-    arr = list(np.random.randint(100000,size=(s)))
-    start_time = time.time()
-    try:
-        quick_sort_pivot_last(arr,0,s-1)
+        arr = list(np.random.randint(100000,size=(s)))
+        start_time = time.time()
+        heap_sort(arr)
         total = (time.time() - start_time)
-        outputRunTime(total, "quick sort (last is pivot)")
-    except:
-        print('Number of recursions exceeded the limit in quick sort last pivot')
+        outputRunTime(total, "heap sort")
 
-    arr = list(np.random.randint(100000,size=(s)))
-    start_time = time.time()
-    try:
-        quick_sort_random_pivot(arr,0,s-1)
-        total = (time.time() - start_time)
-        outputRunTime(total, "quick sort (random pivot)")
-    except:
-        print('Number of recursions exceeded the limit in quick sort random pivot')
+        arr = list(np.random.randint(100000,size=(s)))
+        start_time = time.time()
+        try:
+            quick_sort_pivot_last(arr,0,s-1)
+            total = (time.time() - start_time)
+            outputRunTime(total, "quick sort (last is pivot)")
+        except:
+            print('Number of recursions exceeded the limit in quick sort last pivot')
 
-    if s <= 100:
-        print(arr)
+        arr = list(np.random.randint(100000,size=(s)))
+        start_time = time.time()
+        try:
+            quick_sort_random_pivot(arr,0,s-1)
+            total = (time.time() - start_time)
+            outputRunTime(total, "quick sort (random pivot)")
+        except:
+            print('Number of recursions exceeded the limit in quick sort random pivot')
 
-    print('\n')
+        if s <= 100:
+            print(arr)
+
+        print('\n')
         

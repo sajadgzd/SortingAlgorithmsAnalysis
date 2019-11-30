@@ -1,5 +1,6 @@
 import time
 import numpy as np
+import random
 
 def insertion_sort(array):
     s = time.time()         # notinng the start time to avoid endless running of loop
@@ -116,64 +117,61 @@ def quick_sort_pivot_last(arr,start,end):
         partition_index = partition(arr,start,end)  # find the partiton element index
         quick_sort_pivot_last(arr, start, partition_index-1)    # recurse with left subarray
         quick_sort_pivot_last(arr, partition_index+1, end)      # recurse with right subarray
-      
-def partition_random(array,low,high):   # selecting a random index as pivot
-    index = np.random.randint(low,high)     # fiding a random index between low and high
-    array[low],array[index] = array[index],array[low]   # swapping the index element with element at low
-    pivot = low     # pivot set at low     
-    i = low + 1     # the index where the partition happens  
-    j = low+1
-    while j < high +1:                  # elements lower than element at pivot are at left of i
-                                        # and elements higher are at right of i(partition). 
-        if array[j] <= array[pivot]: 
-            array[i] , array[j] = array[j] , array[i] 
-            i = i + 1
-        j+=1
-    array[pivot] , array[i - 1] = array[i - 1] , array[pivot]   # swapping pivot element with (i-1) element
-    
-    return (i-1)    # returning the index where partition happened
+
+def partition_random(array, low, high):
+    r = random.randrange(low,high)
+    array[r],array[high] = array[high],array[r]
+    return partition(array, low, high)
 
 def quick_sort_random_pivot(arr,start,end):
     if start < end:                              #solve until start is less than end
         pi = partition_random(arr,start,end)     #partition the array
         quick_sort_random_pivot(arr, start, pi-1)   #recursively solve left subarray of pivot
         quick_sort_random_pivot(arr, pi+1, end)  #recursively solve right subarray of pivot
-        
+
+
+def outputRunTime(total, name):
+    if total >= 1:
+        print('Running time of ', name, ' for size',s,'\tis {:.5f}'.format(total), 'seconds')
+    else:
+        print('Running time of ', name, ' for size',s,'\tis {:.5f}'.format(total*1000), 'milliseconds')
+
 
 if __name__ == '__main__':
     # sizes = [10,100,1000,10000,100000,1000000]  # sizes on which testing is done
     total = 0
-    
+    print('\n')
     s = int(input('Enter the input size of array\t'))
     arr = list(np.random.randint(100000,size=(s)))
 
-    start_time = time.time()
+    
     try:
+        start_time = time.time()
         insertion_sort(arr)
         end_time = time.time()
         total = (time.time() - start_time)
-        print('Execution time of insertion sort for size',s,'is {:.6f}'.format(total*1000),'milliseconds')
+        outputRunTime(total, "insertion sort")
     except:
-        print('Execution time of insertion sort exceeds 30 seconds so aborted')
+        print('Running time of insertion sort exceeds 30 seconds so aborted')
         
     arr = list(np.random.randint(100000,size=(s)))
     start_time = time.time()
     merge_sort(arr,0,s-1)
     total = (time.time() - start_time)
-    print('Execution time of merge sort for size',s,'is {:.6f}'.format(total*1000),'milliseconds')
+    outputRunTime(total, "merge sort")
 
     arr = list(np.random.randint(100000,size=(s)))
     start_time = time.time()
     heap_sort(arr)
     total = (time.time() - start_time)
-    print('Execution time of heap sort for size',s,'is {:.6f}'.format(total*1000),'milliseconds')
+    outputRunTime(total, "heap sort")
 
     arr = list(np.random.randint(100000,size=(s)))
     start_time = time.time()
     try:
         quick_sort_pivot_last(arr,0,s-1)
         total = (time.time() - start_time)
-        print('Execution time of quick sort last pivot for size',s,'is {:.6f}'.format(total*1000),'milliseconds')
+        outputRunTime(total, "quick sort (last is pivot)")
     except:
         print('Number of recursions exceeded the limit in quick sort last pivot')
 
@@ -182,12 +180,12 @@ if __name__ == '__main__':
     try:
         quick_sort_random_pivot(arr,0,s-1)
         total = (time.time() - start_time)
-        print('Execution time of quick sort random pivot for size',s,'is {:.6f}'.format(total*1000),'milliseconds')
+        outputRunTime(total, "quick sort (random pivot)")
     except:
         print('Number of recursions exceeded the limit in quick sort random pivot')
 
     if s <= 100:
         print(arr)
 
-    print('\n\n')
+    print('\n')
         

@@ -144,7 +144,6 @@ if __name__ == '__main__':
     s = int(input('Enter the input size of array\t'))
     arr = list(np.random.randint(100000,size=(s)))
 
-    
     try:
         start_time = time.time()
         insertion_sort(arr)

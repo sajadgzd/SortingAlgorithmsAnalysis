@@ -140,137 +140,54 @@ def quick_sort_random_pivot(arr,start,end):
         quick_sort_random_pivot(arr, pi+1, end)  #recursively solve right subarray of pivot
         
 
-
-
 if __name__ == '__main__':
-    sizes = [10,100,1000,10000,100000,1000000]  # sizes on which testing is done
+    # sizes = [10,100,1000,10000,100000,1000000]  # sizes on which testing is done
+    total = 0
     
-    #while True:
     s = int(input('Enter the input size of array\t'))
-    inp = list(np.random.randint(100000,size=(s)))  # random list of size s created between 
-                                                    # 10 to 100000
-    flag = 0                                    # flag to check if any exception occured or not
+    arr = list(np.random.randint(100000,size=(s)))
+
     start_time = time.time()
     try:
-        if s <= 1000:    # for sizes 10,100 and 1000 , sorting array for
-                                                # 100 or 1000 times and then taking average
-                                                # to prevent 0.0 execution time recording in python
-            total = 0
-            if s==10:
-                for i in range(1000):
-                    inp = list(np.random.randint(100000,size=(s)))
-                    insertion_sort(inp)
-                total = (time.time() - start_time)/1000.0
-                print('Execution time of insertion sort(avg for 1000 runs) for size',s,'is',total*1000,'milliseconds')
-                flag = 1
-            else:
-                for i in range(100):
-                    insertion_sort(inp)
-                total = (time.time() - start_time)/100.0
-                print('Execution time of insertion sort(avg for 100 runs) for size',s,'is',total*1000,'milliseconds')
-                flag = 1   
-        else:
-            insertion_sort(inp)
+        insertion_sort(arr)
+        end_time = time.time()
+        total = (time.time() - start_time)
+        print('Execution time of insertion sort for size',s,'is {:.6f}'.format(total*1000),'milliseconds')
     except:
-        flag = 1
         print('Execution time of insertion sort exceeds 30 seconds so aborted')
-    end_time = time.time()
-    if flag == 0:
-        print('Execution time of insertion sort for size',s,'',(end_time-start_time)*1000,'milliseconds')
+        
+    arr = list(np.random.randint(100000,size=(s)))
+    start_time = time.time()
+    merge_sort(arr,0,s-1)
+    total = (time.time() - start_time)
+    print('Execution time of merge sort for size',s,'is {:.6f}'.format(total*1000),'milliseconds')
 
+    arr = list(np.random.randint(100000,size=(s)))
+    start_time = time.time()
+    heap_sort(arr)
+    total = (time.time() - start_time)
+    print('Execution time of heap sort for size',s,'is {:.6f}'.format(total*1000),'milliseconds')
 
-    inp = list(np.random.randint(100000,size=(s)))
-    flag = 0
+    arr = list(np.random.randint(100000,size=(s)))
     start_time = time.time()
     try:
-
-        if s <= 1000:
-            total = 0
-            for i in range(100):
-                inp = list(np.random.randint(100000,size=(s)))
-                merge_sort(inp,0,s-1)
-            total = (time.time() - start_time)/100.0
-            print('Execution time of merge sort(avg for 100 runs) for size',s,'is',total*1000,'milliseconds')
-            flag = 1  
-        else:
-            merge_sort(inp,0,s-1)
+        quick_sort_pivot_last(arr,0,s-1)
+        total = (time.time() - start_time)
+        print('Execution time of quick sort last pivot for size',s,'is {:.6f}'.format(total*1000),'milliseconds')
     except:
-        flag = 1
-    end_time = time.time()
-    if flag==0:
-        print('Execution time of merge sort for size',s,'',(end_time-start_time)*1000,'milliseconds')
-
-    inp = list(np.random.randint(100000,size=(s)))
-    flag=0
-    start_time = time.time()
-
-    try:
-
-        if s <= 1000:
-            total = 0
-            for i in range(100):
-                inp = list(np.random.randint(100000,size=(s)))
-                heap_sort(inp)
-            total = (time.time() - start_time)/100.0
-            print('Execution time of heap sort(avg for 100 runs) for size',s,'is',total*1000,'milliseconds')
-            flag = 1  
-        else:
-            heap_sort(inp)
-    except:
-        flag = 1
-    end_time = time.time()
-    if flag==0:
-        print('Execution time of heap sort for size',s,'',(end_time-start_time)*1000,'milliseconds')
-
-    inp = list(np.random.randint(100000,size=(s)))
-    flag=0
-    start_time = time.time()
-    try:
-        if s <= 1000:
-            total = 0
-            for i in range(100):
-                inp = list(np.random.randint(100000,size=(s)))
-                quick_sort_pivot_last(inp,0,s-1)
-            total = (time.time() - start_time)/100.0
-            print('Execution time of quick sort last pivot(avg for 100 runs) for size',s,'is',total*1000,'milliseconds')
-            flag = 1  
-        else:
-            quick_sort_pivot_last(inp,0,s-1)
-
-    except:
-        flag=1
         print('Number of recursions exceeded the limit in quick sort last pivot')
 
-    end_time = time.time()
-    if flag==0:
-
-        print('Execution time of quick sort(last pivot) for size',s,'',(end_time-start_time)*1000,'milliseconds')
-
-    inp = list(np.random.randint(100000,size=(s)))
+    arr = list(np.random.randint(100000,size=(s)))
     start_time = time.time()
-
-    flag = 0
     try:
-
-        if s <= 1000:
-            total = 0
-            for i in range(100):
-                inp = list(np.random.randint(100000,size=(s)))
-                quick_sort_random_pivot(inp,0,s-1)
-            total = (time.time() - start_time)/100.0
-            print('Execution time of quick sort random pivot(avg for 100 runs) for size',s,'is',total*1000,'milliseconds')
-            flag = 1  
-        else:
-            quick_sort_random_pivot(inp,0,s-1)
-
+        quick_sort_random_pivot(arr,0,s-1)
+        total = (time.time() - start_time)
+        print('Execution time of quick sort random pivot for size',s,'is {:.6f}'.format(total*1000),'milliseconds')
     except:
-        flag = 1
         print('Number of recursions exceeded the limit in quick sort random pivot')
-    end_time = time.time()
-    if flag == 0:
-        print('Execution time of quick sort(random pivot) for size',s,'',(end_time-start_time)*1000,'milliseconds')
 
     if s <= 100:
-        print(inp)
+        print(arr)
+
     print('\n\n')
         

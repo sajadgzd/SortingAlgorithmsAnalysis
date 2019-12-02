@@ -1,3 +1,7 @@
+
+
+# Sajad Gholamzadehrizi
+# CSC 220
 import time
 import numpy as np
 import random

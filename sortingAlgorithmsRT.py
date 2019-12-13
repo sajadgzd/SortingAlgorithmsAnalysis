@@ -1,7 +1,7 @@
 
 
 # Sajad Gholamzadehrizi
-# CSC 220
+# CSC 220 Algorithms
 import time
 import numpy as np
 import random
